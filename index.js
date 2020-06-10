@@ -1,15 +1,14 @@
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 import { render } from 'react-dom';
 import Todos from './Todos';
 import AddTodo from './AddTodo';
 import './style.css';
+import uniqueId from 'lodash/utility/uniqueId'
 
 class App extends Component {
+  [ id ] = useState(() => uniqueId('myprefix-'))
   state = {
-    todos: [
-      {id: 1, content: 'buy some milk'},
-      {id: 2, content: 'play mario kart'}
-    ]
+    todos: []
   }
   deleteTodo = (id) => {
     const todos = this.state.todos.filter(todo => {
@@ -20,7 +19,8 @@ class App extends Component {
     });
   }
   addTodo = (todo) => {
-    todo.id = todo;
+    todo.id = Math.round(Math.random() * 10000000);
+    console.log("todo.id: ", todo.id);
     let todos = [...this.state.todos, todo];
     this.setState({
       todos
